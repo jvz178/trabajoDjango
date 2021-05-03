@@ -2,7 +2,7 @@ from django.db import models
 
 class Usuario(models.Model):
     username=models.CharField(max_length=30)
-    password=models.IntegerField()
+    password=models.CharField(max_length=30)
 
 class Cliente(models.Model):
     dni=models.CharField(max_length=10)
