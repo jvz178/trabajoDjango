@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-import html
 
-def login():
-    return HttpResponse(html)
+def login(request):
+    return render(request,'registration/login.html')

@@ -1,8 +1,5 @@
 from django.db import models
-
-class Usuario(models.Model):
-    username=models.CharField(max_length=30)
-    password=models.CharField(max_length=30)
+from django.contrib.auth.models import User
 
 class Cliente(models.Model):
     dni=models.CharField(max_length=10)
@@ -11,7 +8,7 @@ class Cliente(models.Model):
     direccion=models.CharField(max_length=100)
     fechaNacimiento=models.DateField()
     foto=models.CharField(max_length=100)
-    idUsuario=models.ForeignKey(Usuario,on_delete=models.CASCADE)
+    idUsuario=models.ForeignKey(User,on_delete=models.CASCADE)
 
 class Especialista(models.Model):
     dni=models.CharField(max_length=10)
@@ -21,7 +18,7 @@ class Especialista(models.Model):
     fechaNacimiento=models.DateField()
     foto=models.CharField(max_length=100)
     biografia=models.CharField(max_length=255)
-    idUsuario=models.ForeignKey(Usuario,on_delete=models.CASCADE)
+    idUsuario=models.ForeignKey(User,on_delete=models.CASCADE)
 
 class Cita(models.Model):
     fecha=models.DateField()
@@ -31,8 +28,8 @@ class Cita(models.Model):
     realizada=models.BooleanField()
 
 class Mensaje(models.Model):
-    idEmisor=models.ForeignKey(Usuario,on_delete=models.CASCADE)
-    idReceptor=models.ForeignKey(Usuario,related_name='%(class)s_requests_created',on_delete=models.CASCADE)
+    idEmisor=models.ForeignKey(User,on_delete=models.CASCADE)
+    idReceptor=models.ForeignKey(User,related_name='%(class)s_requests_created',on_delete=models.CASCADE)
     fecha=models.DateField()
     asunto=models.CharField(max_length=50)
     texto=models.TextField()
