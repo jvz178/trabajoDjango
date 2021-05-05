@@ -27,7 +27,8 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Iniciar sesion</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'login' %}">Iniciar sesion</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">Atras</a></li>
                     </ul>
                 </div>
             </div>
@@ -41,19 +42,30 @@
                         <hr class="divider my-4" />
                     </div>
                     <div class="col-lg-8 align-self-baseline">
-                        <p class="text-white-75 font-weight-light mb-5">Rellena los campos mostrados para registrarte</p>
-                        <div align="center">
+                        <p class="text-white-75 font-weight-light mb-5">Estas a un paso de unirte al centro de ayuda emocional numero 1 de España</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Services-->
+        <section class="page-section" id="services">
+            <div class="container">
+                <h2 class="text-center mt-0">Rellena los campos para registrarte</h2>
+                <hr class="divider my-4" />
+                <div align="center">
                         <form action="" method="POST">
                             {% csrf_token %}
                                 {{form.as_p}}
                             </br>
                             <button type="submit" class="btn btn-primary btn-xl js-scroll-trigger">Registrarse</button>
                         </form>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </header>
+        </section>
+
+
+
+
 
         <!-- Contact-->
         <section class="page-section" id="contact">
