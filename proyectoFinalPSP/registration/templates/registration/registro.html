@@ -43,11 +43,9 @@
                     <div class="col-lg-8 align-self-baseline">
                         <p class="text-white-75 font-weight-light mb-5">Rellena los campos mostrados para registrarte</p>
                         <div align="center">
-                        <form class="form center" method="POST">
+                        <form action="" method="POST">
                             {% csrf_token %}
-                            <table>
-                                {{form.as_table}}
-                            </table>
+                                {{form.as_p}}
                             </br>
                             <button type="submit" class="btn btn-primary btn-xl js-scroll-trigger">Registrarse</button>
                         </form>

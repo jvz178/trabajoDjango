@@ -1,16 +1,21 @@
-from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .forms import FormularioRegistro
-from django.urls.base import reverse
 
-def registro(request):
-    formulario_registro=FormularioRegistro()
+class SignupView(CreateView):
+    form_class=UserCreationForm
+    template_name="registration/registro.html"
 
-    if request.method=="POST":
-        formulario_registro=FormularioRegistro(data=request.POST)
-        if formulario_registro.is_valid():
-            username=request.POST.get('username','')
-            password=request.POST.get('password','')
-            return redirect(reverse('login'))
+    def get_success_url(self):
+        return reverse_lazy('login')+'?register'
     
-    return render(request,'registro.html',{'form':formulario_registro})
+    def get_form(self,form_class=None):
+        form=super(SignupView,self).get_form()
+        form.fields['username'].widget=forms.TextInput(attrs={'class':'form-control mb2',
+                                         'placeholder':'Introduce el nombre de usuario'})
+        form.fields['password1'].widget=forms.PasswordInput(attrs={'class':'form-control mb2',
+                                                    'placeholder':'Introduce una contraseña'})
+        form.fields['password2'].widget=forms.TextInput(attrs={'class':'form-control mb2',
+                                        'placeholder':'Introduce la contraseña de nuevo'})
+
+        return form
