@@ -4,4 +4,4 @@ from .models import Cita
 class CitaForm(forms.ModelForm):
     class Meta:
         model=Cita
-        fields=['fecha']
+        fields=['fecha','idCliente','idEspecialista','informe','realizada']

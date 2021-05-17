@@ -24,7 +24,7 @@ class Cita(models.Model):
     fecha=models.DateField()
     idCliente=models.ForeignKey(Cliente,on_delete=models.CASCADE)
     idEspecialista=models.ForeignKey(Especialista,on_delete=models.CASCADE)
-    informe=models.TextField()
+    informe=models.TextField(blank=True)
     realizada=models.BooleanField()
 
 class Mensaje(models.Model):

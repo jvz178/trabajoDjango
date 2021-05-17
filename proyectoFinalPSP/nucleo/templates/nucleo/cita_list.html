@@ -42,14 +42,50 @@
                         </div>
                         <div class="col-lg-8 align-self-baseline">
                         <div align="center">
-                        <form action="" method="POST">
-                        {% csrf_token %}
-                        <table>
-                        {{form.as_table}}
-                        </table>
-                        </br>
-                        <input type="submit" value="Pedir cita"/>
-                        </form>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                            <table bgcolor="">
+                            <thead>
+							<tr>
+								<td><font color="white">Fecha</font></td>
+								<td><font color="white">Id especialista</font></td>
+								<td><font color="white">Informe</font></td>
+                                <td><font color="white">Realizada</font></td>
+                                <td><font color="white">Acciones</font></td>
+							</tr>
+						    <thead>
+                            <tbody>
+                            {% if cita_list %}
+                            {% for c in cita_list %}
+							<tr>
+                                {% if c.idCliente.idUsuario.id == user.id %}
+                                <td><font color="white">{{ c.fecha }}</font></td>
+								<td><font color="white">{{ c.idEspecialista }}</font></td>
+                                <td><font color="white">{{ c.informe }}</font></td>
+                                <td><font color="white">{{ c.realizada }}</font></td>
+                                <td><a href="deleteCita/{{ c.id }}">
+								    <abbr title="Borrar">
+									<button type="submit" class="btn btn-default">
+										<font color="white"><i class="far fa-calendar-check"></i></font>
+									</button>
+                                    </abbr></a> 
+                                    
+                                    <a href="updateCita/{{ c.id }}">
+								    <abbr title="Editar">
+									<button type="button" class="btn btn-default">
+										<font color="white"><i class="far fa-calendar-check"></i></font>
+									</button>
+									</abbr></a></td>
+                                {%endif%}
+							</tr>
+                            {% endfor %}
+                            </tbody>
+                            </table>
+                            {% else %}
+                            <p>No hay ningun especialista</p>
+                            {% endif %}
+                            <div>
+                        </div>
                         </div>
                       </div>
                     </div>

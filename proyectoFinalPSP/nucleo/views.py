@@ -1,8 +1,7 @@
 from django.shortcuts import redirect, render
-from django.views.generic.edit import UpdateView
-from django.views.generic.list import ListView
+from django.views.generic import ListView, UpdateView, DeleteView
 from django.contrib.auth.models import User
-from .models import Especialista
+from .models import Especialista, Cita
 from .forms import CitaForm
 from django.urls import reverse
 
@@ -14,9 +13,10 @@ def logueado(request):
 
 def cita(request):
     cita_form=CitaForm()
-    if request.method=="POST":
+    if request.method=="POST":        
         cita_form=CitaForm(data=request.POST)
         if cita_form.is_valid():
+            realizada=request.POST.get('realizada',False)
             cita_form.save()
     return render(request,"nucleo/cita.html",{'form':cita_form})
 
@@ -27,3 +27,15 @@ class updateUser(UpdateView):
 
 class EspecialistaListView(ListView):
     model=Especialista
+
+class CitaListView(ListView):
+    model=Cita
+
+class CitaDeleteView(DeleteView):
+    model=Cita
+    success_url="/listCita"
+
+class CitaUpdateView(UpdateView):
+    model=Cita
+    fields=['fecha','idEspecialista']
+    success_url="/listCita"
