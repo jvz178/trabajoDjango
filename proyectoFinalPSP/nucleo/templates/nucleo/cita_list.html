@@ -48,7 +48,7 @@
                             <thead>
 							<tr>
 								<td><font color="white">Fecha</font></td>
-								<td><font color="white">Id especialista</font></td>
+								<td><font color="white">Especialista</font></td>
 								<td><font color="white">Informe</font></td>
                                 <td><font color="white">Realizada</font></td>
                                 <td><font color="white">Acciones</font></td>
@@ -60,7 +60,7 @@
 							<tr>
                                 {% if c.idCliente.idUsuario.id == user.id %}
                                 <td><font color="white">{{ c.fecha }}</font></td>
-								<td><font color="white">{{ c.idEspecialista }}</font></td>
+								<td><font color="white">{{ c.idEspecialista.nombre }} {{ c.idEspecialista.apellidos }}</font></td>
                                 <td><font color="white">{{ c.informe }}</font></td>
                                 <td><font color="white">{{ c.realizada }}</font></td>
                                 <td><a href="deleteCita/{{ c.id }}">

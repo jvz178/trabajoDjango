@@ -125,3 +125,5 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL='logueado'
 
 LOGOUT_REDIRECT_URL='inicio'
+
+AUTH_USER_MODEL = 'nucleo.User'

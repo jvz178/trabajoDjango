@@ -1,5 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
+
+class User(AbstractUser):
+    role_cliente=models.BooleanField('role_cliente', default=True)
 
 class Cliente(models.Model):
     dni=models.CharField(max_length=10)
