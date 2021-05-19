@@ -1,9 +1,10 @@
-from django.shortcuts import redirect, render
-from django.views.generic import ListView, UpdateView, DeleteView
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.models import User
 from .models import Especialista, Cita, Cliente
 from .forms import CitaForm
 from django.urls import reverse
+from django.http.response import Http404
 
 def inicio(request):
     return render(request,'nucleo/inicio.html')
@@ -19,6 +20,14 @@ def cita(request):
             realizada=request.POST.get('realizada',False)
             cita_form.save()
     return render(request,"nucleo/cita.html",{'form':cita_form})
+
+def citasCliente(request,idCliente):
+    try:
+        ct=Cita.objects.get(idCliente=idCliente)
+    except ct.DoesNotExist:
+        raise Http404('Este cliente no tiene citas')
+    context={'ct':ct}
+    return render(request,"nucleo/citasCliente.html",context)
 
 class updateUser(UpdateView):
     model=User

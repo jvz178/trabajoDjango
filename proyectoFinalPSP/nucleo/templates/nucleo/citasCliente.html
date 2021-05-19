@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Yo Te Ayudo - clientes</title>
+        <title>Yo Te Ayudo - citas</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -37,7 +37,7 @@
             <div class="container h-100">
                 <div class="row h-100 align-items-center justify-content-center text-center">
                     <div class="col-lg-10 align-self-end">
-                        <h1 class="text-uppercase text-white font-weight-bold">Clientes</h1>
+                        <h1 class="text-uppercase text-white font-weight-bold">Citas {{ct.idCliente.nombre}}</h1>
                         <hr class="divider my-4" />
                         </div>
                         <div class="col-lg-8 align-self-baseline">
@@ -47,31 +47,24 @@
                             <table bgcolor="">
                             <thead>
 							<tr>
-								<td><font color="white">Dni</font></td>
-								<td><font color="white">Nombre</font></td>
-								<td><font color="white">Apellidos</font></td>
-                                <td><font color="white">Ver historial citas</font></td>
+								<td><font color="white">Fecha</font></td>
+								<td><font color="white">Especialista</font></td>
+								<td><font color="white">Informe</font></td>
+                                <td><font color="white">Realizada</font></td>
 							</tr>
 						    <thead>
                             <tbody>
-                            {% if cliente_list %}
-                            {% for c in cliente_list %}
+                            {% if ct %}
 							<tr>
-                                <td><font color="white">{{ c.dni }}</font></td>
-								<td><font color="white">{{ c.nombre }}</font></td>
-                                <td><font color="white">{{ c.apellidos }}</font></td>
-                                <td><a href="citasCliente/{{c.id}}">
-								    <abbr title="Historial citas">
-									<button type="button" class="btn btn-default">
-										<font color="white"><i class="far fa-clipboard"></i></font>
-									</button>
-									</abbr></a></td>
+                                <td><font color="white">{{ ct.fecha }}</font></td>
+								<td><font color="white">{{ ct.idEspecialista.nombre }} {{ c.idEspecialista.apellidos }}</font></td>
+                                <td><font color="white">{{ ct.informe }}</font></td>
+                                <td><font color="white">{{ ct.realizada }}</font></td>
 							</tr>
-                            {% endfor %}
                             </tbody>
                             </table>
                             {% else %}
-                            <p>No hay ningun cliente</p>
+                            <p>No hay ninguna cita</p>
                             {% endif %}
                             <div>
                         </div>
