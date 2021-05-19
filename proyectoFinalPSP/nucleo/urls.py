@@ -6,6 +6,7 @@ urlpatterns = [
     path('logueado',views.logueado,name="logueado"),
     path('editarUsuario/<int:pk>',views.updateUser.as_view(), name="editarUsuario"),
     path('listEspecialista',views.EspecialistaListView.as_view(),name="listEspecialista"),
+    path('listCliente',views.ClienteListView.as_view(),name="listCliente"),
     path('listCita',views.CitaListView.as_view(),name="listCita"),
     path('cita',views.cita,name="cita"),
     path('deleteCita/<int:pk>',views.CitaDeleteView.as_view(),name="deleteCita"),

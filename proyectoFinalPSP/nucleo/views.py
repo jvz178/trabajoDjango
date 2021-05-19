@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, UpdateView, DeleteView
 from django.contrib.auth.models import User
-from .models import Especialista, Cita
+from .models import Especialista, Cita, Cliente
 from .forms import CitaForm
 from django.urls import reverse
 
@@ -27,6 +27,9 @@ class updateUser(UpdateView):
 
 class EspecialistaListView(ListView):
     model=Especialista
+
+class ClienteListView(ListView):
+    model=Cliente
 
 class CitaListView(ListView):
     model=Cita
