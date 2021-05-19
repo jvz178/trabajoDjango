@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Role(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    role=models.CharField(max_length=15, default="ROLE_CLI")
+
 class Cliente(models.Model):
     dni=models.CharField(max_length=10)
     nombre=models.CharField(max_length=30)
