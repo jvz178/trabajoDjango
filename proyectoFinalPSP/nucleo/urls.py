@@ -9,7 +9,7 @@ urlpatterns = [
     path('listCliente',views.ClienteListView.as_view(),name="listCliente"),
     path('listCita',views.CitaListView.as_view(),name="listCita"),
     path('citasCliente/<int:idCliente>',views.citasCliente,name="citasCliente"),
-    path('cita',views.cita,name="cita"),
     path('deleteCita/<int:pk>',views.CitaDeleteView.as_view(),name="deleteCita"),
     path('updateCita/<int:pk>',views.CitaUpdateView.as_view(),name="updateCita"),
+    path('createCita',views.CitaCreateView.as_view(),name="createCita"),
 ]

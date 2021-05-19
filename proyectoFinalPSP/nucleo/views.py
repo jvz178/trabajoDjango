@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import ListView, UpdateView, DeleteView, DetailView
+from django.views.generic import ListView, UpdateView, DeleteView, DetailView, CreateView
 from django.contrib.auth.models import User
 from .models import Especialista, Cita, Cliente
 from .forms import CitaForm
@@ -36,6 +36,11 @@ class updateUser(UpdateView):
 
 class EspecialistaListView(ListView):
     model=Especialista
+
+class CitaCreateView(CreateView):
+    model=Cita
+    fields=['fecha','idCliente','idEspecialista','informe','realizada']
+    success_url="/listEspecialista"
 
 class ClienteListView(ListView):
     model=Cliente

@@ -50,7 +50,6 @@
 								<td><font color="white">Dni</font></td>
 								<td><font color="white">Nombre</font></td>
 								<td><font color="white">Apellidos</font></td>
-                                <td><font color="white">Pedir cita</font></td>
 							</tr>
 						    <thead>
                             <tbody>
@@ -60,12 +59,6 @@
                                 <td><font color="white">{{ e.dni }}</font></td>
 								<td><font color="white">{{ e.nombre }}</font></td>
                                 <td><font color="white">{{ e.apellidos }}</font></td>
-                                <td><a href="cita">
-								    <abbr title="Pedir cita">
-									<button type="button" class="btn btn-default">
-										<font color="white"><i class="far fa-calendar-check"></i></font>
-									</button>
-									</abbr></a></td>
 							</tr>
                             {% endfor %}
                             </tbody>
@@ -74,6 +67,13 @@
                             <p>No hay ningun especialista</p>
                             {% endif %}
                             <div>
+                            <a href="createCita">
+							    <abbr title="Pedir cita">
+									<button type="button" class="btn btn-default">
+										<font color="white"><i class="far fa-calendar-check"></i></font>
+									</button>
+								</abbr>
+                            </a>
                         </div>
                         </div>
                       </div>

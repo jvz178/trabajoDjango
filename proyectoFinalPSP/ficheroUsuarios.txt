@@ -1,0 +1,19 @@
+Admin:
+usuario
+Contraseña: us123456
+
+Cliente:
+usuario2
+Contraseña:contraseña123987Aaz
+
+Cliente:
+pepe
+Contraseña:us123456
+
+Especialista:
+pepa
+Contraseña:us123456
+
+Especialista:
+carlos
+Contraseña:us123456
