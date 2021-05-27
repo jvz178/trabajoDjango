@@ -5,6 +5,12 @@ from .models import Especialista, Cita, Cliente
 from .forms import CitaForm
 from django.urls import reverse
 from django.http.response import Http404
+from datetime import datetime
+from datetime import date
+
+fechaHora = datetime.now()
+#fecha=fechaHora.strftime('%d/%m/%Y')
+fecha=date.today()
 
 def inicio(request):
     return render(request,'nucleo/inicio.html')
@@ -47,6 +53,12 @@ class ClienteListView(ListView):
 
 class CitaListView(ListView):
     model=Cita
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["fecha"] = fecha
+        return context
+    
 
 class CitaDeleteView(DeleteView):
     model=Cita

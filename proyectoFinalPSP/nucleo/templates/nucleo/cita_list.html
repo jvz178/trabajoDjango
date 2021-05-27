@@ -47,16 +47,22 @@
                             <table bgcolor="">
                             <thead>
 							<tr>
+                                {% if user.role.role == 'ROLE_CLI' %}
 								<td><font color="white">Fecha</font></td>
 								<td><font color="white">Especialista</font></td>
 								<td><font color="white">Informe</font></td>
                                 <td><font color="white">Realizada</font></td>
+                                {% endif %}
+                                {% if user.role.role == 'ROLE_ESP' %}
+                                <td><font color="white">Cliente</font></td>
+                                {% endif %}
                                 <td><font color="white">Acciones</font></td>
 							</tr>
 						    <thead>
                             <tbody>
                             {% if cita_list %}
                             {% for c in cita_list %}
+                            {% if user.role.role == 'ROLE_CLI' %}
 							<tr>
                                 {% if c.idCliente.idUsuario.id == user.id %}
                                 <td><font color="white">{{ c.fecha }}</font></td>
@@ -76,13 +82,38 @@
 										<font color="white"><i class="far fa-edit"></i></font>
 									</button>
 									</abbr></a></td>
-                                {%endif%}
+                                {% endif %}
 							</tr>
+                            {% endif %}
+                            {% if user.role.role == 'ROLE_ESP' %}
+                            {% if c.idEspecialista.idUsuario.id == user.id %}
+                            {% if c.fecha == fecha %}
+                            {% if c.realizada == 0%}
+                            <td><font color="white">{{ c.idCliente.nombre }} {{ c.idCliente.apellidos }}</font></td>
+                            <td> <a href="#">
+								    <abbr title="Rellenar informe">
+									<button type="submit" class="btn btn-default">
+										<font color="white"><i class="fas fa-file-signature"></i></font>
+									</button>
+                                    </abbr></a>
+
+                                 <a href="#">
+								    <abbr title="Aplazar cita">
+									<button type="submit" class="btn btn-default">
+										<font color="white"><i class="far fa-calendar-alt"></i></font>
+									</button>
+                                    </abbr></a>
+                            </td>
+                            {% endif %}
+                            {% endif %}
+                            {% endif %}
+                            </tr>
+                            {% endif %}
                             {% endfor %}
                             </tbody>
                             </table>
                             {% else %}
-                            <p>No hay ningun especialista</p>
+                            <p>No hay ninguna cita</p>
                             {% endif %}
                             <div>
                         </div>
