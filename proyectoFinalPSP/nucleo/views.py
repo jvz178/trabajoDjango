@@ -68,3 +68,15 @@ class CitaUpdateView(UpdateView):
     model=Cita
     fields=['fecha','idEspecialista']
     success_url="/listCita"
+
+class CitaInforme(UpdateView):
+    model=Cita
+    fields=['informe']
+    template_name="nucleo/cita_form.html"
+    success_url="/listCita"
+
+class CitaFecha(UpdateView):
+    model=Cita
+    fields=['fecha']
+    template_name="nucleo/cita_form.html"
+    success_url="/listCita"

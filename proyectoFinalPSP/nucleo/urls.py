@@ -12,4 +12,6 @@ urlpatterns = [
     path('deleteCita/<int:pk>',views.CitaDeleteView.as_view(),name="deleteCita"),
     path('updateCita/<int:pk>',views.CitaUpdateView.as_view(),name="updateCita"),
     path('createCita',views.CitaCreateView.as_view(),name="createCita"),
+    path('citaInforme/<int:pk>', views.CitaInforme.as_view(),name="citaInforme"),
+    path('citaFecha/<int:pk>', views.CitaFecha.as_view(),name="citaFecha"),
 ]
