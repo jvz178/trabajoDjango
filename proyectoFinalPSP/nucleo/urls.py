@@ -14,4 +14,5 @@ urlpatterns = [
     path('createCita',views.CitaCreateView.as_view(),name="createCita"),
     path('citaInforme/<int:pk>', views.CitaInforme.as_view(),name="citaInforme"),
     path('citaFecha/<int:pk>', views.CitaFecha.as_view(),name="citaFecha"),
+    path('chat/<int:especialistaId>',include('chat.urls')),
 ]
