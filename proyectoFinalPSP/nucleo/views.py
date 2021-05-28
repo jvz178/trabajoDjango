@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, UpdateView, DeleteView, DetailView, CreateView
 from django.contrib.auth.models import User
 from .models import Especialista, Cita, Cliente
-from .forms import CitaForm
+from .forms import CitaForm, InformeForm
 from django.urls import reverse
 from django.http.response import Http404
 from datetime import datetime
@@ -71,7 +71,7 @@ class CitaUpdateView(UpdateView):
 
 class CitaInforme(UpdateView):
     model=Cita
-    fields=['informe']
+    form_class=InformeForm
     template_name="nucleo/cita_form.html"
     success_url="/listCita"
 
