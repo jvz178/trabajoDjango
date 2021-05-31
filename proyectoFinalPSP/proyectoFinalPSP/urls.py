@@ -24,7 +24,7 @@ urlpatterns = [
     path('jet/',include('jet.urls','jet')),
     path('admin/', admin.site.urls),
     path('',include('nucleo.urls')),
-    path('chat/<int:especialistaId>',include('chat.urls')),
+    path('',include('chat.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('registration.urls')),
 ]+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
