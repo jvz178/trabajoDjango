@@ -5,7 +5,6 @@ direccion=""
 def chat(request,especialistaId,usuarioId):
     global direccion
     direccion='chat/ficheros/'+str(usuarioId)+'-'+str(especialistaId)+'.txt'
-    crearEscribirFichero = open(direccion,'a')
     fichero=mostrarMensajes()
     return render(request,"chat.html",{'fichero':fichero})
 
