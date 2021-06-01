@@ -1,0 +1,5 @@
+
+pepe: Hola (/)<sig>
+carlos: Buenas (/)<sig>
+pepe: Queria preguntarte algo... (/)<sig>
+carlos: Dispara (/)<sig>

@@ -1,5 +1,0 @@
-pepe: Hola (//)<sig>
-pepa: Hola, que pasa? (/)<sig>
-pepe: Queria decirte algo... (/)<sig>
-pepe: ¿Tienes sesiones para parejas? (/)<sig>
-pepe: ¿Y para grupos? (/)<sig>

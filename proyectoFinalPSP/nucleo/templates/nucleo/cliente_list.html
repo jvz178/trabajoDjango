@@ -50,7 +50,7 @@
 								<td><font color="white">Dni</font></td>
 								<td><font color="white">Nombre</font></td>
 								<td><font color="white">Apellidos</font></td>
-                                <td><font color="white">Ver historial citas</font></td>
+                                <td><font color="white">Acciones</font></td>
 							</tr>
 						    <thead>
                             <tbody>
@@ -65,7 +65,14 @@
 									<button type="button" class="btn btn-default">
 										<font color="white"><i class="far fa-clipboard"></i></font>
 									</button>
-									</abbr></a></td>
+									</abbr></a>
+                                    <a href="chat/{{c.idUsuario.id}}/{{user.id}}">
+								    <abbr title="Conversacion">
+									<button type="button" class="btn btn-default">
+										<font color="white"><i class="fas fa-comments"></i></font>
+									</button>
+									</abbr></a>
+                                </td>
 							</tr>
                             {% endfor %}
                             </tbody>
