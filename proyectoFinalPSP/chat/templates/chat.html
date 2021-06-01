@@ -45,8 +45,10 @@
                         <div class="panel panel-default">
                         {% for f in fichero %}
                         <font color="white">{{f}}</font>
+                        {% if f != ""%}
                         <br/>
                         <br/>
+                        {% endif %}
                         {% endfor %}
                       </div>
                     </div>
