@@ -4,3 +4,5 @@ pepe: Hola
 pepe: Queria preguntarte una cosa... (/)<sig>
 pepa: Muy buenas Pepe, ¿que quieres preguntarme? (/)<sig>
 pepe: Pues, queria saber si teneis sesiones de pareja o de grupo (/)<sig>
+pepe: Para apuntarme a alguna (/)<sig>
+pepa: Pues si, hay ambas opciones (/)<sig>
