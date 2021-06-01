@@ -1,2 +1,2 @@
 pepe: Hola (//)<sig>
-pepa:Hola, que pasa? (/)<sig>
+pepa: Hola, que pasa? (/)<sig>

@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('chat/<int:usuarioId>/<int:especialistaId>',views.chat,name="chat"),
-    path('mensaje',views.mensaje,name="mensaje"),
+    path('guardarMensaje/<str:user>',views.guardarMensaje,name="guardarMensaje"),
 ]
