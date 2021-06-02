@@ -1,8 +1,10 @@
 
-pepe: Hola
- (/)<sig>
-pepe: Queria preguntarte una cosa... (/)<sig>
-pepa: Muy buenas Pepe, ¿que quieres preguntarme? (/)<sig>
-pepe: Pues, queria saber si teneis sesiones de pareja o de grupo (/)<sig>
-pepe: Para apuntarme a alguna (/)<sig>
-pepa: Pues si, hay ambas opciones (/)<sig>
+pepe: Hola<sig>
+pepe: Queria preguntarte una cosa... <sig>
+pepa: Muy buenas Pepe, que quieres preguntarme? <sig>
+pepa: Estoy a tu disposicion <sig>
+pepe: Vale, genial <sig>
+pepe: Teneis sesiones de pareja? <sig>
+pepa: Si por supuesto<sig>
+pepe: Vale gracias<sig>
+pepa: Genial, reserva una cita para obtener tu sesion<sig>

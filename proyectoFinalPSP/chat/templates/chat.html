@@ -62,7 +62,7 @@
         <br>
         <div align="center">
         <p>Escribir:</p>
-        <form action="/guardarMensaje/{{user}}" method="POST">
+        <form action="/guardarMensaje" method="POST">
             {% csrf_token %}
             <textarea name="comentario" rows="2" cols="40"></textarea>
             <abbr title="Enviar">
