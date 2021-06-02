@@ -1,8 +1,6 @@
 from django.shortcuts import render
 
 direccion=""
-direccionSinLeer=""
-listaMensajes=""
 espId=""
 usuId=""
 usuario=""
@@ -16,12 +14,12 @@ def chat(request,especialistaId,usuarioId,user,role):
     rol=role
     direccion='chat/ficheros/'+str(usuarioId)+'-'+str(especialistaId)+'.txt'
     fichero=mostrarMensajes()
-    fichero=mensajesSinLeer(fichero)
     return fichero
 
 def chatReciente(request,especialistaId,usuarioId,user,role):
     fichero=chat(request,especialistaId,usuarioId,user,role)
-    fichero=obtenerUltimosMensajes(fichero,8)
+    if(len(fichero)>8):
+        fichero=obtenerUltimosMensajes(fichero,8)
     return render(request,"chat.html",{'fichero':fichero})
 
 def historialChat(request):
@@ -34,17 +32,18 @@ def guardarMensaje(request):
     abrirFichero = open(direccion,'a')
     abrirFichero.write("\n"+mensaje+"<sig>")
     fichero=mostrarMensajes()
-    fichero.append(mensaje+" (Mensaje no leido)")
-    reescribeSinLeer()
+    fichero.append(mensaje)
     return render(request,"chat.html",{'fichero':fichero})
 
 
 def obtenerUltimosMensajes(fichero,n):
     contador=n
-    nuevoFichero=[]
+    contador2=0
+    nuevoFichero=[""]*n
     while(contador>0):
-        nuevoFichero.append(fichero[len(fichero)-contador])
+        nuevoFichero[contador2]=fichero[len(fichero)-contador]
         contador=contador-1
+        contador2=contador2+1
     return nuevoFichero
 
 def mostrarMensajes():
@@ -53,32 +52,10 @@ def mostrarMensajes():
     fichero=leerFichero.read().split("<sig>")
     return fichero
 
-def mensajesSinLeer(fichero):
-    global direccion, espId, usuId, usuario, rol, direccionSinLeer, listaMensajes
-    direccionSinLeer="chat/ficheros/sinLeer("+str(usuId)+"-"+str(espId)+").txt"
-    abreFichero= open(direccionSinLeer,'a')
-    leer=open(direccionSinLeer,'r')
-    listaMensajes=leer.read().split(",")
+def verMensajes(fichero, n, texto):
+    global listaMensajes
     contador=1
-    if(rol=="ROLE_CLI"):
-        fichero=verMensajes(listaMensajes,fichero,0, " (Mensaje nuevo)")
-        listaMensajes[0]=0
-        reescribir=open(direccionSinLeer,'w')
-        reescribir.write(str(listaMensajes[0])+","+str(listaMensajes[1]))
-
-        fichero=verMensajes(listaMensajes,fichero,1, " (Mensaje no leido)")
-    if(rol=="ROLE_ESP"):
-        fichero=verMensajes(listaMensajes,fichero,1, " (Mensaje nuevo)")
-        listaMensajes[1]=0
-        reescribir=open(direccionSinLeer,'w')
-        reescribir.write(str(listaMensajes[0])+","+str(listaMensajes[1]))
-
-        fichero=verMensajes(listaMensajes,fichero,0, " (Mensaje no leido)")
-
-    return fichero
-
-def verMensajes(listaMensajes, fichero, n, texto):
-    contador=1
+    print("DATO: "+listaMensajes[n])
     if(int(listaMensajes[n])>0):
             contadorMensajes=listaMensajes[n]
             while(int(contadorMensajes)>0):
@@ -94,13 +71,3 @@ def verMensajes(listaMensajes, fichero, n, texto):
                         contadorMensajes=int(contadorMensajes)-1
                 contador=int(contador)+1
     return fichero
-
-def reescribeSinLeer():
-    global listaMensajes
-    reescribir=open(direccionSinLeer,'w')
-    if(rol=="ROLE_CLI"):
-        listaMensajes[1]=int(listaMensajes[1])+1
-        reescribir.write(str(listaMensajes[0])+","+str(listaMensajes[1]))
-    if(rol=="ROLE_ESP"):
-        listaMensajes[0]=int(listaMensajes[0])+1
-        reescribir.write(str(listaMensajes[0])+","+str(listaMensajes[1]))

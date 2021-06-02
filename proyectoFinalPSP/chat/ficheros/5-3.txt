@@ -1,2 +1,7 @@
 
-pepe: Hola <sig>
+carlos: Buenas Pepe, que le estan pareciendo nuestros profesionales?<sig>
+pepe: Pues, creo que son muy buenos<sig>
+carlos: Me alegra oir eso<sig>
+carlos: Recuerda que estamos aqui para lo que necesites<sig>
+carlos: Mandanos un mensaje si quieres consultarnos<sig>
+pepe: Vale, gracias<sig>

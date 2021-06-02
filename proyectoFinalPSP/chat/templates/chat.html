@@ -64,7 +64,7 @@
         <p>Escribir:</p>
         <form action="/guardarMensaje" method="POST">
             {% csrf_token %}
-            <textarea name="comentario" rows="2" cols="40"></textarea>
+            <textarea maxlength="60" name="comentario" rows="2" cols="40"></textarea>
             <abbr title="Enviar">
                <button type="submit" class="btn btn-default">
                   <i class="fas fa-paper-plane"></i>
