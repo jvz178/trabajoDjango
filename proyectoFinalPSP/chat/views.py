@@ -17,7 +17,16 @@ def chat(request,especialistaId,usuarioId,user,role):
     direccion='chat/ficheros/'+str(usuarioId)+'-'+str(especialistaId)+'.txt'
     fichero=mostrarMensajes()
     fichero=mensajesSinLeer(fichero)
+    return fichero
+
+def chatReciente(request,especialistaId,usuarioId,user,role):
+    fichero=chat(request,especialistaId,usuarioId,user,role)
+    fichero=obtenerUltimosMensajes(fichero,8)
     return render(request,"chat.html",{'fichero':fichero})
+
+def historialChat(request):
+    fichero=chat(request,espId,usuId,usuario,rol)
+    return render(request,"historialChat.html",{'fichero':fichero}) 
 
 def guardarMensaje(request):
     global direccion, espId, usuId, usuario,rol,direccionSinLeer
@@ -29,6 +38,14 @@ def guardarMensaje(request):
     reescribeSinLeer()
     return render(request,"chat.html",{'fichero':fichero})
 
+
+def obtenerUltimosMensajes(fichero,n):
+    contador=n
+    nuevoFichero=[]
+    while(contador>0):
+        nuevoFichero.append(fichero[len(fichero)-contador])
+        contador=contador-1
+    return nuevoFichero
 
 def mostrarMensajes():
     abrirFichero = open(direccion,'a')

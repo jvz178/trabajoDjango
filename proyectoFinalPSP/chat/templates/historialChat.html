@@ -47,38 +47,16 @@
                         <div class="col-lg-8 align-self-baseline">
                         <div align="center">
                         <div class="panel panel-default">
+                        <textarea readonly name="comentario" rows="16" cols="50">
                         {% for f in fichero %}
-                        <font color="white">{{f}}</font>
-                        {% if f != ""%}
-                        <br/>
-                        <br/>
-                        {% endif %}
+                        {{f}}
                         {% endfor %}
+                        </textarea>
                       </div>
                     </div>
                 </div>
             </div>
         </header>
-        <br>
-        <div align="center">
-        <p>Escribir:</p>
-        <form action="/guardarMensaje" method="POST">
-            {% csrf_token %}
-            <textarea name="comentario" rows="2" cols="40"></textarea>
-            <abbr title="Enviar">
-               <button type="submit" class="btn btn-default">
-                  <i class="fas fa-paper-plane"></i>
-               </button>
-            </abbr>
-        </form>
-        <a href="/historialChat">
-			<abbr title="Ver todos los mensajes">
-				<button type="button" class="btn btn-default">
-					<i class="fas fa-clipboard"></i>
-				</button>
-			</abbr>
-        </a>
-        </div>
         <!-- Footer-->
         <br>
         <footer class="bg-light py-5">
