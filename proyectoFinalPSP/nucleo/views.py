@@ -11,6 +11,9 @@ from datetime import date
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from django.views.generic import View
+from reportlab.platypus import TableStyle,Table
+from reportlab.lib import colors
+from reportlab.lib.units import cm
 
 fechaHora = datetime.now()
 #fecha=fechaHora.strftime('%d/%m/%Y')
@@ -28,7 +31,7 @@ def fechasPDF(request):
 def generarPDF (request):
     print("HOLAAAAAA: "+request.POST.get('inicio',''))
     print("HOLAAAAAAAAAAAA: "+request.POST.get('final',''))
-    return""
+    return render(request,'pdfCliente')
 
 def cita(request):
     cita_form=CitaForm()
@@ -95,19 +98,38 @@ class CitaFecha(UpdateView):
 
 class pdfCliente(View):
 
+    def cabecera(self,pdf):
+        #Establecemos el tamaño de letra en 16 y el tipo de letra Helvetica
+        pdf.setFont("Helvetica", 16)
+        #Dibujamos una cadena en la ubicación X,Y especificada
+        pdf.drawString(230, 790, u"Yo te ayudo")
+        pdf.setFont("Helvetica", 14)
+        pdf.drawString(200, 770, u"Juntos superamos el COVID-19")
+
     def get(self, request, *args, **kwargs):
-        #Indicamos el tipo de contenido a devolver, en este caso un pdf
         response = HttpResponse(content_type='application/pdf')
-        #La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal
         buffer = BytesIO()
-        #Canvas nos permite hacer el reporte con coordenadas X y Y
         pdf = canvas.Canvas(buffer)
-        #Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.
         self.cabecera(pdf)
-        #Con show page hacemos un corte de página para pasar a la siguiente
+        y=600
+        self.tablaCliente(pdf,y)
         pdf.showPage()
         pdf.save()
         pdf = buffer.getvalue()
         buffer.close()
         response.write(pdf)
         return response
+    
+    def tablaCliente(self,pdf,y):
+        encabezados = ('DNI', 'Nombre', 'Apellidos', 'Direccion', 'Fecha de nacimiento','foto','Id')
+        detalles = [(Cliente.dni, Cliente.nombre, Cliente.apellidos, Cliente.direccion,Cliente.fechaNacimiento,Cliente.foto,Cliente.idUsuario) for Cliente in Cliente.objects.all()]
+        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm])
+        detalle_orden.setStyle(TableStyle(
+            [
+                ('ALIGN',(0,0),(3,0),'CENTER'),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black), 
+                ('FONTSIZE', (0, 0), (-1, -1), 10),
+            ]
+        ))
+        detalle_orden.wrapOn(pdf, 800, 600)
+        detalle_orden.drawOn(pdf, 60,y)
