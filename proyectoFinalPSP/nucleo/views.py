@@ -18,6 +18,7 @@ from reportlab.lib.units import cm
 fechaHora = datetime.now()
 #fecha=fechaHora.strftime('%d/%m/%Y')
 fecha=date.today()
+idClientePdf=0
 
 def inicio(request):
     return render(request,'nucleo/inicio.html')
@@ -25,13 +26,19 @@ def inicio(request):
 def logueado(request):
     return render(request,'nucleo/logueado.html')
 
-def fechasPDF(request):
+def fechasPDF(request,pk):
+    global idClientePdf
+    print("IDDDDDDDD: "+str(pk))
+    idClientePdf=pk
     return render(request,'nucleo/fechasPDF.html')
 
 def generarPDF (request):
+    global inicio
+    inicio=request.POST.get('inicio','')
     print("HOLAAAAAA: "+request.POST.get('inicio',''))
     print("HOLAAAAAAAAAAAA: "+request.POST.get('final',''))
-    return render(request,'pdfCliente')
+    pdfCliente()
+    return render(request,'nucleo/vistaGenerarPDF.html')
 
 def cita(request):
     cita_form=CitaForm()
@@ -98,10 +105,10 @@ class CitaFecha(UpdateView):
 
 class pdfCliente(View):
 
+    global idClientePdf, inicio
+
     def cabecera(self,pdf):
-        #Establecemos el tamaño de letra en 16 y el tipo de letra Helvetica
         pdf.setFont("Helvetica", 16)
-        #Dibujamos una cadena en la ubicación X,Y especificada
         pdf.drawString(230, 790, u"Yo te ayudo")
         pdf.setFont("Helvetica", 14)
         pdf.drawString(200, 770, u"Juntos superamos el COVID-19")
@@ -111,8 +118,10 @@ class pdfCliente(View):
         buffer = BytesIO()
         pdf = canvas.Canvas(buffer)
         self.cabecera(pdf)
-        y=600
+        y=700
         self.tablaCliente(pdf,y)
+        y2=530
+        self.tablaCitas(pdf,y2)
         pdf.showPage()
         pdf.save()
         pdf = buffer.getvalue()
@@ -122,8 +131,24 @@ class pdfCliente(View):
     
     def tablaCliente(self,pdf,y):
         encabezados = ('DNI', 'Nombre', 'Apellidos', 'Direccion', 'Fecha de nacimiento','foto','Id')
-        detalles = [(Cliente.dni, Cliente.nombre, Cliente.apellidos, Cliente.direccion,Cliente.fechaNacimiento,Cliente.foto,Cliente.idUsuario) for Cliente in Cliente.objects.all()]
+        detalles = [(Cliente.dni, Cliente.nombre, Cliente.apellidos, Cliente.direccion,Cliente.fechaNacimiento,Cliente.foto,Cliente.idUsuario)
+        for Cliente in Cliente.objects.filter(idUsuario=idClientePdf)]
         detalle_orden = Table([encabezados] + detalles, colWidths=[2 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm])
+        detalle_orden.setStyle(TableStyle(
+            [
+                ('ALIGN',(0,0),(3,0),'CENTER'),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black), 
+                ('FONTSIZE', (0, 0), (-1, -1), 10),
+            ]
+        ))
+        detalle_orden.wrapOn(pdf, 800, 600)
+        detalle_orden.drawOn(pdf, 60,y)
+    
+    def tablaCitas(self,pdf,y):
+        encabezados = ('Id', 'Fecha', 'Especialista', 'Informe','Realizada')
+        detalles = [(Cita.id, Cita.fecha, Cita.idEspecialista.nombre+" "+Cita.idEspecialista.apellidos, Cita.informe,Cita.realizada)
+        for Cita in Cita.objects.filter(fecha>inicio)]
+        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm])
         detalle_orden.setStyle(TableStyle(
             [
                 ('ALIGN',(0,0),(3,0),'CENTER'),

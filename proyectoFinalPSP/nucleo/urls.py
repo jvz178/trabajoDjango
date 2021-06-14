@@ -16,7 +16,7 @@ urlpatterns = [
     path('citaInforme/<int:pk>', views.CitaInforme.as_view(),name="citaInforme"),
     path('citaFecha/<int:pk>', views.CitaFecha.as_view(),name="citaFecha"),
     path('chat/<int:usuarioId>/<int:especialistaId>',include('chat.urls')),
-    path('fechasPDF',views.fechasPDF,name="fechasPDF"),
+    path('fechasPDF/<int:pk>',views.fechasPDF,name="fechasPDF"),
     path('generarPDF',views.generarPDF,name="generarPDF"),
     path('pdfCliente',pdfCliente.as_view(),name="pdfCliente")
 ]
