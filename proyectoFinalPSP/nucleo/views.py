@@ -135,7 +135,7 @@ class pdfCliente(View):
         encabezados = ('DNI', 'Nombre', 'Apellidos', 'Direccion', 'Fecha de nacimiento','foto','Id')
         detalles = [(Cliente.dni, Cliente.nombre, Cliente.apellidos, Cliente.direccion,Cliente.fechaNacimiento,Cliente.foto,Cliente.idUsuario)
         for Cliente in Cliente.objects.filter(idUsuario=idClientePdf)]
-        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm])
+        detalle_orden = Table([encabezados] + detalles, colWidths=[3 * cm, 3 * cm, 3 * cm, 4 * cm, 4 * cm, 3 * cm, 2 * cm])
         detalle_orden.setStyle(TableStyle(
             [
                 ('ALIGN',(0,0),(3,0),'CENTER'),
@@ -143,8 +143,8 @@ class pdfCliente(View):
                 ('FONTSIZE', (0, 0), (-1, -1), 10),
             ]
         ))
-        detalle_orden.wrapOn(pdf, 800, 600)
-        detalle_orden.drawOn(pdf, 60,y)
+        detalle_orden.wrapOn(pdf, 38400, 28800)
+        detalle_orden.drawOn(pdf, 120,y)
     
     def tablaCitas(self,pdf,y):
         fecha1=datetime.strptime(fechaInicio,'%Y-%m-%d')
@@ -152,7 +152,7 @@ class pdfCliente(View):
         encabezados = ('Id', 'Fecha', 'Especialista', 'Informe','Realizada')
         detalles = [(Cita.id, Cita.fecha, Cita.idEspecialista.nombre+" "+Cita.idEspecialista.apellidos, Cita.informe,Cita.realizada)
         for Cita in Cita.objects.filter(fecha__gte=datetime.date(fecha1), fecha__lte=datetime.date(fecha2))]
-        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm])
+        detalle_orden = Table([encabezados] + detalles, colWidths=[1 * cm, 3 * cm, 5 * cm, 6 * cm, 2 * cm])
         detalle_orden.setStyle(TableStyle(
             [
                 ('ALIGN',(0,0),(3,0),'CENTER'),
@@ -160,5 +160,5 @@ class pdfCliente(View):
                 ('FONTSIZE', (0, 0), (-1, -1), 10),
             ]
         ))
-        detalle_orden.wrapOn(pdf, 800, 600)
-        detalle_orden.drawOn(pdf, 60,y)
+        detalle_orden.wrapOn(pdf, 38400, 28800)
+        detalle_orden.drawOn(pdf, 120,y)
