@@ -19,6 +19,8 @@ fechaHora = datetime.now()
 #fecha=fechaHora.strftime('%d/%m/%Y')
 fecha=date.today()
 idClientePdf=0
+fechaInicio=str(date.today())
+fechaFinal=str(date.today())
 
 def inicio(request):
     return render(request,'nucleo/inicio.html')
@@ -33,10 +35,9 @@ def fechasPDF(request,pk):
     return render(request,'nucleo/fechasPDF.html')
 
 def generarPDF (request):
-    global inicio
-    inicio=request.POST.get('inicio','')
-    print("HOLAAAAAA: "+request.POST.get('inicio',''))
-    print("HOLAAAAAAAAAAAA: "+request.POST.get('final',''))
+    global fechaInicio, fechaFinal
+    fechaInicio=request.POST.get('inicio','')
+    fechaFinal=request.POST.get('final','')
     pdfCliente()
     return render(request,'nucleo/vistaGenerarPDF.html')
 
@@ -105,7 +106,7 @@ class CitaFecha(UpdateView):
 
 class pdfCliente(View):
 
-    global idClientePdf, inicio
+    global idClientePdf, fechaInicio, fechaFinal
 
     def cabecera(self,pdf):
         pdf.setFont("Helvetica", 16)
@@ -130,6 +131,7 @@ class pdfCliente(View):
         return response
     
     def tablaCliente(self,pdf,y):
+
         encabezados = ('DNI', 'Nombre', 'Apellidos', 'Direccion', 'Fecha de nacimiento','foto','Id')
         detalles = [(Cliente.dni, Cliente.nombre, Cliente.apellidos, Cliente.direccion,Cliente.fechaNacimiento,Cliente.foto,Cliente.idUsuario)
         for Cliente in Cliente.objects.filter(idUsuario=idClientePdf)]
@@ -145,9 +147,11 @@ class pdfCliente(View):
         detalle_orden.drawOn(pdf, 60,y)
     
     def tablaCitas(self,pdf,y):
+        fecha1=datetime.strptime(fechaInicio,'%Y-%m-%d')
+        fecha2=datetime.strptime(fechaFinal,'%Y-%m-%d')
         encabezados = ('Id', 'Fecha', 'Especialista', 'Informe','Realizada')
         detalles = [(Cita.id, Cita.fecha, Cita.idEspecialista.nombre+" "+Cita.idEspecialista.apellidos, Cita.informe,Cita.realizada)
-        for Cita in Cita.objects.filter(fecha>inicio)]
+        for Cita in Cita.objects.filter(fecha__gte=datetime.date(fecha1), fecha__lte=datetime.date(fecha2))]
         detalle_orden = Table([encabezados] + detalles, colWidths=[2 * cm, 5 * cm, 5 * cm, 5 * cm, 5 * cm])
         detalle_orden.setStyle(TableStyle(
             [
