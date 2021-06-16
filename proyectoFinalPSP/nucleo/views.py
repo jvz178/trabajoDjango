@@ -19,8 +19,8 @@ fechaHora = datetime.now()
 #fecha=fechaHora.strftime('%d/%m/%Y')
 fecha=date.today()
 idClientePdf=0
-fechaInicio=str(date.today())
-fechaFinal=str(date.today())
+fechaInicio=""
+fechaFinal=""
 
 def inicio(request):
     return render(request,'nucleo/inicio.html')
@@ -30,7 +30,6 @@ def logueado(request):
 
 def fechasPDF(request,pk):
     global idClientePdf
-    print("IDDDDDDDD: "+str(pk))
     idClientePdf=pk
     return render(request,'nucleo/fechasPDF.html')
 
@@ -110,7 +109,7 @@ class pdfCliente(View):
 
     def cabecera(self,pdf):
         pdf.setFont("Helvetica", 16)
-        pdf.drawString(230, 790, u"Yo te ayudo")
+        pdf.drawString(255, 795, u"Yo te ayudo")
         pdf.setFont("Helvetica", 14)
         pdf.drawString(200, 770, u"Juntos superamos el COVID-19")
 
@@ -132,10 +131,10 @@ class pdfCliente(View):
     
     def tablaCliente(self,pdf,y):
 
-        encabezados = ('DNI', 'Nombre', 'Apellidos', 'Direccion', 'Fecha de nacimiento','foto','Id')
-        detalles = [(Cliente.dni, Cliente.nombre, Cliente.apellidos, Cliente.direccion,Cliente.fechaNacimiento,Cliente.foto,Cliente.idUsuario)
+        encabezados = ('Id','DNI', 'Nombre', 'Apellidos', 'Direccion', 'Fecha de nacimiento','foto')
+        detalles = [(Cliente.id, Cliente.dni, Cliente.nombre, Cliente.apellidos, Cliente.direccion,Cliente.fechaNacimiento,Cliente.foto)
         for Cliente in Cliente.objects.filter(idUsuario=idClientePdf)]
-        detalle_orden = Table([encabezados] + detalles, colWidths=[3 * cm, 3 * cm, 3 * cm, 4 * cm, 4 * cm, 3 * cm, 2 * cm])
+        detalle_orden = Table([encabezados] + detalles, colWidths=[1 * cm, 3 * cm, 2 * cm, 3 * cm, 4 * cm, 4 * cm, 3 * cm])
         detalle_orden.setStyle(TableStyle(
             [
                 ('ALIGN',(0,0),(3,0),'CENTER'),
@@ -143,16 +142,37 @@ class pdfCliente(View):
                 ('FONTSIZE', (0, 0), (-1, -1), 10),
             ]
         ))
-        detalle_orden.wrapOn(pdf, 38400, 28800)
-        detalle_orden.drawOn(pdf, 120,y)
+        detalle_orden.wrapOn(pdf, 0, 0)
+        detalle_orden.drawOn(pdf, 17,y)
     
     def tablaCitas(self,pdf,y):
-        fecha1=datetime.strptime(fechaInicio,'%Y-%m-%d')
-        fecha2=datetime.strptime(fechaFinal,'%Y-%m-%d')
-        encabezados = ('Id', 'Fecha', 'Especialista', 'Informe','Realizada')
-        detalles = [(Cita.id, Cita.fecha, Cita.idEspecialista.nombre+" "+Cita.idEspecialista.apellidos, Cita.informe,Cita.realizada)
-        for Cita in Cita.objects.filter(fecha__gte=datetime.date(fecha1), fecha__lte=datetime.date(fecha2))]
-        detalle_orden = Table([encabezados] + detalles, colWidths=[1 * cm, 3 * cm, 5 * cm, 6 * cm, 2 * cm])
+        if(fechaInicio !=""):
+            fecha1=datetime.strptime(fechaInicio,'%Y-%m-%d')
+        if(fechaFinal != ""):
+            fecha2=datetime.strptime(fechaFinal,'%Y-%m-%d')
+        
+        if(fechaInicio != ""):
+            fecha1=datetime.strptime(fechaInicio,'%Y-%m-%d')
+            if(fechaFinal != ""):
+                fecha2=datetime.strptime(fechaFinal,'%Y-%m-%d')
+                encabezados = ('Id', 'Fecha', 'Especialista', 'Informe','Realizada')
+                detalles = [(Cita.id, Cita.fecha, Cita.idEspecialista.nombre+" "+Cita.idEspecialista.apellidos, Cita.informe,Cita.realizada)
+                for Cita in Cita.objects.filter(fecha__gte=datetime.date(fecha1), fecha__lte=datetime.date(fecha2))]
+            else:
+                encabezados = ('Id', 'Fecha', 'Especialista', 'Informe','Realizada')
+                detalles = [(Cita.id, Cita.fecha, Cita.idEspecialista.nombre+" "+Cita.idEspecialista.apellidos, Cita.informe,Cita.realizada)
+                for Cita in Cita.objects.filter(fecha__gte=datetime.date(fecha1))]
+        elif(fechaFinal != ""):
+            fecha2=datetime.strptime(fechaFinal,'%Y-%m-%d')
+            encabezados = ('Id', 'Fecha', 'Especialista', 'Informe','Realizada')
+            detalles = [(Cita.id, Cita.fecha, Cita.idEspecialista.nombre+" "+Cita.idEspecialista.apellidos, Cita.informe,Cita.realizada)
+            for Cita in Cita.objects.filter(fecha__lte=datetime.date(fecha2))]
+        else:
+            encabezados = ('Id', 'Fecha', 'Especialista', 'Informe','Realizada')
+            detalles = [(Cita.id, Cita.fecha, Cita.idEspecialista.nombre+" "+Cita.idEspecialista.apellidos, Cita.informe,Cita.realizada)
+            for Cita in Cita.objects.all()]
+
+        detalle_orden = Table([encabezados] + detalles, colWidths=[1 * cm, 3 * cm, 5 * cm, 9 * cm, 2 * cm])
         detalle_orden.setStyle(TableStyle(
             [
                 ('ALIGN',(0,0),(3,0),'CENTER'),
@@ -160,5 +180,5 @@ class pdfCliente(View):
                 ('FONTSIZE', (0, 0), (-1, -1), 10),
             ]
         ))
-        detalle_orden.wrapOn(pdf, 38400, 28800)
-        detalle_orden.drawOn(pdf, 120,y)
+        detalle_orden.wrapOn(pdf, 0, 0)
+        detalle_orden.drawOn(pdf, 17,y)
